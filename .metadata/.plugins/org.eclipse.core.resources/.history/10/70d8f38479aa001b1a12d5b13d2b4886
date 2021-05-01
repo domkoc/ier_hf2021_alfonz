@@ -1,0 +1,17 @@
+MAS intelligent_vacuum {
+
+	infrastructure: Centralised
+
+	environment: Building
+
+	agents:
+		// vacuum #3;
+		vacuum_A vacuum.asl;
+		vacuum_B vacuum.asl;
+		vacuum_C vacuum.asl;
+		// dirtsensor
+		dirtsensor;
+
+	aslSourcePath:
+		"src/asl";
+}

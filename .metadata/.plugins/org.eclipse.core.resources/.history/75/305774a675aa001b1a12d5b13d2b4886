@@ -1,0 +1,14 @@
+MAS intelligent_vacuum {
+
+	infrastructure: Centralised
+
+	environment: Building
+
+	agents:
+		minions;
+		gru;
+		agent1 sample_agent;
+
+	aslSourcePath:
+		"src/asl";
+}
