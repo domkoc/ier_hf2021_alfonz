@@ -27,11 +27,10 @@ class FloorModel extends GridWorldModel {
             setAgPos(2, 2, 0);
         
         // location of walls    
-            addWall(0, 1, 0, 6);
-            addWall(6, 1, 6, 6);
             addWall(2, 1, 4, 1);
+            addWall(0, 1, 0, 1);
+            addWall(6, 1, 6, 1);
             addWall(3, 1, 3, 6);
-            addWall(0, 6, 6, 6);
             
        // location of station 
             add(Base, 0, 0);
