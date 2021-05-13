@@ -61,10 +61,10 @@ class FloorView extends GridWorldView {
         switch (object) {
             case 16: 
             	g.setColor(new Color(102,51,0));
-            	g.fillOval((int)(cellSizeW * x + 0.1*cellSizeH), (int)(cellSizeH * y + 0.1*cellSizeH), (int)(cellSizeW*0.8), (int)(cellSizeH*0.8));
+            	g.fillRect(cellSizeW * x, cellSizeH * y, cellSizeW, cellSizeH);
                 g.setColor(Color.white);
                 drawString(g, x, y, defaultFont, "Dirt"); 
-                break;                                                                                  
+                break;
             case 8: 
             	g.setColor(Color.black);
             	g.fillRect(cellSizeW * x, cellSizeH * y, cellSizeW, cellSizeH);
