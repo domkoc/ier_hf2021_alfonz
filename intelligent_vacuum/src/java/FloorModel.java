@@ -6,7 +6,7 @@ import jason.environment.grid.Location;
 
 class FloorModel extends GridWorldModel {
 	
-	public static final int GSize = 7; 			// grid size
+	public static final int GridSize = 7; 			// grid size
 	public static final int Base  = 8; 		// station code in grid model
     public static final int Dirt  = 16; 		// garbage code in grid model
     ArrayList<Location> dirt_stains = new ArrayList<Location>();
@@ -18,7 +18,7 @@ class FloorModel extends GridWorldModel {
     Vacuum vacuum_C = new Vacuum("vacuum_C");
     
     FloorModel() {
-        super(GSize, GSize, 3);
+        super(GridSize, GridSize, 3);
         
         // initial location of agents
         try {
@@ -47,7 +47,7 @@ class FloorModel extends GridWorldModel {
 
     }
 
-    public void addGarbage(int x, int y){
+    public void addDirt(int x, int y){
     	add(Dirt, x, y);
     }
     
