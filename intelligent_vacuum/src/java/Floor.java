@@ -166,13 +166,13 @@ public class Floor extends Environment{
                 System.out.println("vacuum_BSpace " + vacuum_BSpace);
                 switch(ag) {
                 case "vacuum_A":
-                    vacuum_ASpace = maxSpace;
+                    vacuum_ASpace = Vacuum.ChargeLimit;
                 	break;
                 case "vacuum_C":
-                    vacuum_CSpace = maxSpace;
+                    vacuum_CSpace = Vacuum.ChargeLimit;
                 break;
                 default:
-                    vacuum_BSpace = maxSpace;
+                    vacuum_BSpace = Vacuum.ChargeLimit;
                 	break;
                 }
         		break;
@@ -204,55 +204,69 @@ public class Floor extends Environment{
     }
     
     void updatePercepts() {
-        Location vacuum_BLocation = model.getAgPos(0);
-        Location vacuum_ALocation = model.getAgPos(1);
-        Location vacuum_CLocation = model.getAgPos(2);
-        vacuum_BOldCharge = vacuum_BCharge;
-        vacuum_AOldCharge = vacuum_ACharge;
-        vacuum_COldCharge = vacuum_CCharge;
-        vacuum_BOldSpace = vacuum_BSpace;
-        vacuum_AOldSpace = vacuum_ASpace;
-        vacuum_COldSpace = vacuum_CSpace;
-        vacuum_BPrevious = vacuum_BLocation;
-        vacuum_APrevious = vacuum_ALocation;
-        vacuum_CPrevious = vacuum_CLocation;
-        removePercept("vacuum_B", Literal.parseLiteral("pos(vacuum_B," + vacuum_BPrevious.x + ", " + vacuum_BPrevious.y + ")"));
+	    Location vacuum_ALoc = model.getAgPos(1);
+	    Location vacuum_BLoc = model.getAgPos(0);
+	    Location vacuum_CLoc = model.getAgPos(2);
+
         removePercept("vacuum_A", Literal.parseLiteral("pos(vacuum_A," + vacuum_APrevious.x + ", " + vacuum_APrevious.y + ")"));
+        removePercept("vacuum_B", Literal.parseLiteral("pos(vacuum_B," + vacuum_BPrevious.x + ", " + vacuum_BPrevious.y + ")"));
         removePercept("vacuum_C", Literal.parseLiteral("pos(vacuum_C," + vacuum_CPrevious.x + ", " + vacuum_CPrevious.y + ")"));
-        removePercept("vacuum_B", Literal.parseLiteral("has_charge(" + vacuum_BOldCharge + ", vacuum_B)"));
+
         removePercept("vacuum_A", Literal.parseLiteral("has_charge(" + vacuum_AOldCharge + ", vacuum_A)"));
+        removePercept("vacuum_B", Literal.parseLiteral("has_charge(" + vacuum_BOldCharge + ", vacuum_B)"));
         removePercept("vacuum_C", Literal.parseLiteral("has_charge(" + vacuum_COldCharge + ", vacuum_C)"));
-        removePercept("vacuum_B", Literal.parseLiteral("has_space(" + vacuum_BOldSpace + ", vacuum_B)"));
-        removePercept("vacuum_A", Literal.parseLiteral("has_space(" + vacuum_AOldSpace + ", vacuum_A)"));
-        removePercept("vacuum_C", Literal.parseLiteral("has_space(" + vacuum_COldSpace + ", vacuum_C)"));
-        if(dirt_stains.contains(vacuum_BLocation) && !garbageValidity.get(dirt_stains.indexOf(vacuum_BLocation))) removePercept("vacuum_B", Literal.parseLiteral("garbage(vacuum_B)"));
-        else if(dirt_stains.contains(vacuum_ALocation) && !garbageValidity.get(dirt_stains.indexOf(vacuum_ALocation))) removePercept("vacuum_A", Literal.parseLiteral("garbage(vacuum_A)"));
-        else if(dirt_stains.contains(vacuum_CLocation) && !garbageValidity.get(dirt_stains.indexOf(vacuum_CLocation))) removePercept("vacuum_C", Literal.parseLiteral("garbage(vacuum_C)"));
-        addPercept("vacuum_B", Literal.parseLiteral("has_charge(" + vacuum_BCharge + ", vacuum_B)"));
+
+        vacuum_AOldCharge = vacuum_ACharge;
+        vacuum_BOldCharge = vacuum_BCharge;
+        vacuum_COldCharge = vacuum_CCharge;
+
         addPercept("vacuum_A", Literal.parseLiteral("has_charge(" + vacuum_ACharge + ", vacuum_A)"));
+        addPercept("vacuum_B", Literal.parseLiteral("has_charge(" + vacuum_BCharge + ", vacuum_B)"));
         addPercept("vacuum_C", Literal.parseLiteral("has_charge(" + vacuum_COldCharge + ", vacuum_C)"));
-        addPercept("vacuum_B", Literal.parseLiteral("has_space(" + vacuum_BOldSpace + ", vacuum_B)"));
+
+        removePercept("vacuum_A", Literal.parseLiteral("has_space(" + vacuum_AOldSpace + ", vacuum_A)"));
+        removePercept("vacuum_B", Literal.parseLiteral("has_space(" + vacuum_BOldSpace + ", vacuum_B)"));
+        removePercept("vacuum_C", Literal.parseLiteral("has_space(" + vacuum_COldSpace + ", vacuum_C)"));
+
+        vacuum_AOldSpace = vacuum_ASpace;
+        vacuum_BOldSpace = vacuum_BSpace;
+        vacuum_COldSpace = vacuum_CSpace;
+
         addPercept("vacuum_A", Literal.parseLiteral("has_space(" + vacuum_AOldSpace + ", vacuum_A)"));
+        addPercept("vacuum_B", Literal.parseLiteral("has_space(" + vacuum_BOldSpace + ", vacuum_B)"));
         addPercept("vacuum_C", Literal.parseLiteral("has_space(" + vacuum_COldSpace + ", vacuum_C)"));
-        addPercept("vacuum_B",Literal.parseLiteral("pos(vacuum_B," + vacuum_BLocation.x + "," + vacuum_BLocation.y + ")"));
-        addPercept("vacuum_A",Literal.parseLiteral("pos(vacuum_A," + vacuum_ALocation.x + "," + vacuum_ALocation.y + ")"));
-        addPercept("vacuum_C",Literal.parseLiteral("pos(vacuum_C," + vacuum_CLocation.x + "," + vacuum_CLocation.y + ")"));
-        if(dirt_stains.contains(vacuum_BLocation) && garbageValidity.get(dirt_stains.indexOf(vacuum_BLocation))){
-            addPercept("vacuum_B", Literal.parseLiteral("garbage(vacuum_B)"));
-            addPercept("vacuum_B", Literal.parseLiteral("is_allowed_to_clean(vacuum_B)"));
-        }
-        if(dirt_stains.contains(vacuum_ALocation) && garbageValidity.get(dirt_stains.indexOf(vacuum_ALocation))){
+
+        if(dirt_stains.contains(vacuum_ALoc) && !garbageValidity.get(dirt_stains.indexOf(vacuum_ALoc))) removePercept("vacuum_A", Literal.parseLiteral("garbage(vacuum_A)"));
+        if(dirt_stains.contains(vacuum_BLoc) && !garbageValidity.get(dirt_stains.indexOf(vacuum_BLoc))) removePercept("vacuum_B", Literal.parseLiteral("garbage(vacuum_B)"));
+        if(dirt_stains.contains(vacuum_CLoc) && !garbageValidity.get(dirt_stains.indexOf(vacuum_CLoc))) removePercept("vacuum_C", Literal.parseLiteral("garbage(vacuum_C)"));
+
+        if(dirt_stains.contains(vacuum_ALoc) && garbageValidity.get(dirt_stains.indexOf(vacuum_ALoc))){
             addPercept("vacuum_A", Literal.parseLiteral("garbage(vacuum_A)"));
             addPercept("vacuum_A", Literal.parseLiteral("is_allowed_to_clean(vacuum_A)"));
         }
-        if(dirt_stains.contains(vacuum_CLocation) && garbageValidity.get(dirt_stains.indexOf(vacuum_CLocation))){
+        if(dirt_stains.contains(vacuum_BLoc) && garbageValidity.get(dirt_stains.indexOf(vacuum_BLoc))){
+            addPercept("vacuum_B", Literal.parseLiteral("garbage(vacuum_B)"));
+            addPercept("vacuum_B", Literal.parseLiteral("is_allowed_to_clean(vacuum_B)"));
+        }
+        if(dirt_stains.contains(vacuum_CLoc) && garbageValidity.get(dirt_stains.indexOf(vacuum_CLoc))){
             addPercept("vacuum_C", Literal.parseLiteral("garbage(vacuum_C)"));
             addPercept("vacuum_C", Literal.parseLiteral("is_allowed_to_clean(vacuum_C)"));
         }
-        model.setAgPos(0, vacuum_BLocation);
-        model.setAgPos(1, vacuum_ALocation);
-        model.setAgPos(2, vacuum_CLocation);
+
+        vacuum_APrevious = vacuum_ALoc;
+        vacuum_BPrevious = vacuum_BLoc;
+        vacuum_CPrevious = vacuum_CLoc;    
+
+        addPercept("vacuum_A",Literal.parseLiteral("pos(vacuum_A," + vacuum_ALoc.x + "," + vacuum_ALoc.y + ")"));
+        addPercept("vacuum_B",Literal.parseLiteral("pos(vacuum_B," + vacuum_BLoc.x + "," + vacuum_BLoc.y + ")"));
+        addPercept("vacuum_C",Literal.parseLiteral("pos(vacuum_C," + vacuum_CLoc.x + "," + vacuum_CLoc.y + ")"));
+
+        model.setAgPos(1, vacuum_ALoc);
+        model.setAgPos(0, vacuum_BLoc);
+        model.setAgPos(2, vacuum_CLoc);
+
         informAgsEnvironmentChanged();
+
     }
 
     void addGarbage(int loc_x, int loc_y){
