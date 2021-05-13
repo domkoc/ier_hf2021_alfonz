@@ -2,7 +2,7 @@
 
 /* Initial beliefs and rules */
 
-pos(station,6,0).
+pos(station,0,0).
 
 
 /* Initial goals */

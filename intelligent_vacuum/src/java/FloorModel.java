@@ -34,7 +34,7 @@ class FloorModel extends GridWorldModel {
             addWall(0, 6, 6, 6);
             
        // location of station 
-            add(Base, 6, 0);
+            add(Base, 0, 0);
             
         } catch (Exception e) {
             e.printStackTrace();
@@ -90,7 +90,7 @@ class FloorModel extends GridWorldModel {
     	else if (ag.equals("vacuum_C")){
     		loc = getAgPos(2);
     	}
-    	if(findPathAndDistanceTo(loc.x, loc.y, x, y).get(2) + findPathAndDistanceTo(x, y, 6, 0).get(2) >= fuel - 5)
+    	if(findPathAndDistanceTo(loc.x, loc.y, x, y).get(2) + findPathAndDistanceTo(x, y, 0, 0).get(2) >= fuel - 5)
     		return false;
     	return true;
 		
