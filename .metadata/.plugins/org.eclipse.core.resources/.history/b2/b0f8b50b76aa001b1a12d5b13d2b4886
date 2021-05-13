@@ -1,7 +1,0 @@
-package intelligent_vacuum;
-
-import jason.environment.grid.GridWorldModel;
-
-public class BuildingModel extends GridWorldModel {
-
-}
