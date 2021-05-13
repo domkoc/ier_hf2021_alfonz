@@ -55,13 +55,13 @@ public class Floor extends Environment{
         addPercept("dirtsensor", Literal.parseLiteral("free(vacuum_B)"));
         addPercept("dirtsensor", Literal.parseLiteral("free(vacuum_A)"));
         addPercept("dirtsensor", Literal.parseLiteral("free(vacuum_C)"));
-        dirt_stains.add(new Location(5,3));
+        dirt_stains.add(new Location(2,4));
         dirtValidity.add(true);
         view  = new FloorView(model);
 		view.addClickListener(this);
         model.setView(view);
         addPercept("dirtsensor", Literal.parseLiteral("dirt_generated(dirt1)"));
-        addPercept(Literal.parseLiteral("pos(dirt1, 5, 3)"));
+        addPercept(Literal.parseLiteral("pos(dirt1, 2, 4)"));
         update_world();
     }
     

@@ -24,7 +24,7 @@ class FloorModel extends GridWorldModel {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        add(16, 5, 3); //alap kosz
+        add(16, 2, 4); //alap kosz
     }
 
     public void addDirt(int x, int y){
