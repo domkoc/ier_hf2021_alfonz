@@ -62,7 +62,7 @@ public class Floor extends Environment{
         model.setView(view);
         addPercept("dirtsensor", Literal.parseLiteral("dirt_generated(dirt1)"));
         addPercept(Literal.parseLiteral("pos(dirt1, 2, 4)"));
-        updatePercepts();
+        update_world();
     }
     
     @Override
@@ -71,7 +71,7 @@ public class Floor extends Environment{
         try {
         	switch(action.getFunctor()) {
         	case "moveTowards":
-                model.moveTowards(ag,(int)((NumberTerm)action.getTerm(0)).solve(),(int)((NumberTerm)action.getTerm(1)).solve());
+                model.move_closer_to(ag,(int)((NumberTerm)action.getTerm(0)).solve(),(int)((NumberTerm)action.getTerm(1)).solve());
                 int agent;
                 switch(ag) {
                 case "vacuum_A":
@@ -85,7 +85,7 @@ public class Floor extends Environment{
                 	break;
                 }
                 Location loc = model.getAgPos(agent);
-                int fuelCost = model.findPathAndDistanceTo(loc.x, loc.y, (int)((NumberTerm)action.getTerm(0)).solve(), (int)((NumberTerm)action.getTerm(1)).solve()).get(2);
+                int fuelCost = model.find_distance_and_path_to_dirt(loc.x, loc.y, (int)((NumberTerm)action.getTerm(0)).solve(), (int)((NumberTerm)action.getTerm(1)).solve()).get(2);
                 switch(ag) {
                 case "vacuum_A":
                     vacuum_ACharge -= fuelCost;
@@ -118,7 +118,7 @@ public class Floor extends Environment{
                 if(ag.equals("vacuum_B")){
                     fuel = vacuum_BCharge;
                     Literal allowance = Literal.parseLiteral("is_allowed_to_clean(vacuum_B)");
-                    if(model.adjustResourceLimits(ag,(int)((NumberTerm)action.getTerm(1)).solve(),(int)((NumberTerm)action.getTerm(2)).solve(), fuel)){
+                    if(model.set_resource_limits(ag,(int)((NumberTerm)action.getTerm(1)).solve(),(int)((NumberTerm)action.getTerm(2)).solve(), fuel)){
                         addPercept("vacuum_A", allowance);
                     }
                     else{
@@ -128,7 +128,7 @@ public class Floor extends Environment{
                 if(ag.equals("vacuum_A")){
                     fuel = vacuum_ACharge;
                     Literal allowance = Literal.parseLiteral("is_allowed_to_clean(vacuum_A)");
-                    if(model.adjustResourceLimits(ag,(int)((NumberTerm)action.getTerm(1)).solve(),(int)((NumberTerm)action.getTerm(2)).solve(), fuel)){
+                    if(model.set_resource_limits(ag,(int)((NumberTerm)action.getTerm(1)).solve(),(int)((NumberTerm)action.getTerm(2)).solve(), fuel)){
                         addPercept("vacuum_A", allowance);
                     }
                     else{
@@ -138,7 +138,7 @@ public class Floor extends Environment{
                 if(ag.equals("vacuum_C")){
                     fuel = vacuum_CCharge;
                     Literal allowance = Literal.parseLiteral("is_allowed_to_clean(vacuum_C)");
-                    if(model.adjustResourceLimits(ag,(int)((NumberTerm)action.getTerm(1)).solve(),(int)((NumberTerm)action.getTerm(2)).solve(), fuel)){
+                    if(model.set_resource_limits(ag,(int)((NumberTerm)action.getTerm(1)).solve(),(int)((NumberTerm)action.getTerm(2)).solve(), fuel)){
                         addPercept("vacuum_C", allowance);
                     }
                     else{
@@ -194,7 +194,7 @@ public class Floor extends Environment{
             e.printStackTrace();
         }
         
-        updatePercepts();
+        update_world();
 
         try {
             Thread.sleep(waitTime);
@@ -203,7 +203,7 @@ public class Floor extends Environment{
         return true;
     }
     
-    void updatePercepts() {
+    void update_world() {
 	    Location vacuum_ALoc = model.getAgPos(1);
 	    Location vacuum_BLoc = model.getAgPos(0);
 	    Location vacuum_CLoc = model.getAgPos(2);
@@ -269,7 +269,7 @@ public class Floor extends Environment{
 
     }
 
-    void addGarbage(int loc_x, int loc_y){
+    void add_garbage(int loc_x, int loc_y){
         dirt_stains.add(new Location(loc_x, loc_y));
         dirtValidity.add(true);
         model.addDirt(loc_x, loc_y);

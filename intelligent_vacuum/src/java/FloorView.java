@@ -23,7 +23,7 @@ class FloorView extends GridWorldView {
 				int column = e.getX() / cellSizeW;
 				int row = e.getY() / cellSizeH;
 				if (column >= 0 && row >= 0 && column < getModel().getWidth() && row < getModel().getHeight()) {
-					building.addGarbage(column, row);
+					building.add_garbage(column, row);
 					update(column, row);
 					System.out.println("Garbage generated at (" + column + "," + row + ")");
 				}
@@ -59,13 +59,13 @@ class FloorView extends GridWorldView {
     @Override
     public void draw(Graphics g, int x, int y, int object) {
         switch (object) {
-            case FloorModel.Dirt: 
+            case 16: 
             	g.setColor(new Color(102,51,0));
             	g.fillRect(cellSizeW * x, cellSizeH * y, cellSizeW, cellSizeH);
                 g.setColor(Color.white);
                 drawString(g, x, y, defaultFont, "Dirt"); 
                 break;
-            case FloorModel.Base: 
+            case 8: 
             	g.setColor(Color.black);
             	g.fillRect(cellSizeW * x, cellSizeH * y, cellSizeW, cellSizeH);
             	g.setColor(Color.white);
