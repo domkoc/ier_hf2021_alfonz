@@ -8,7 +8,7 @@ class FloorModel extends GridWorldModel {
 	
 	public static final int GridSize = 7; 			// grid size
 	public static final int Base  = 8; 		// station code in grid model
-    public static final int Dirt  = 16; 		// garbage code in grid model
+    public static final int Dirt  = 16; 		// dirt code in grid model
     ArrayList<Location> dirt_stains = new ArrayList<Location>();
 
     Random random = new Random(System.currentTimeMillis());
@@ -39,10 +39,10 @@ class FloorModel extends GridWorldModel {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        Location garbage = new Location(2,4);
-        dirt_stains.add(garbage);
+        Location dirt = new Location(2,4);
+        dirt_stains.add(dirt);
         
-        // initial location of a garbage
+        // initial location of a dirt
         add(Dirt, 2, 4);
 
     }

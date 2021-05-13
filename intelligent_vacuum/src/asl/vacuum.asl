@@ -14,7 +14,7 @@ pos(station,6,0).
     !go(Place);
     !check_resources(Vacuum).
 
-+garbage(Vacuum) : is_allowed_to_clean(Vacuum)
++dirt(Vacuum) : is_allowed_to_clean(Vacuum)
  <- ?pos(Vacuum, X1, Y1);
     clean(X1, Y1);
     !check_resources(Vacuum).
